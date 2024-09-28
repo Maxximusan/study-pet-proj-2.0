@@ -1,3 +1,5 @@
+//Тренировочный файл
+
 const express = require("express");
 const { v4 } = require("uuid");
 const products = require("./data/example-products");
