@@ -1,7 +1,7 @@
 const Contact = require("../models/contacts");
 
 const getAllContacts = async (req, res, next) => {
-  const contacts = await contactsOperations.listContacts();
+  const contacts = await Contact.find({}, "name phone"); // получаем только нужные поля (если нужны все - пусто в find); также есть альтернативные варианты!
 
   res.json({
     status: "success",
@@ -17,7 +17,7 @@ const contactByIdGet = async (req, res, next) => {
   // console.log(req.params.contactId);
 
   const { contactId } = req.params;
-  const result = await contactsOperations.getContactById(contactId);
+  const result = await Contact.findById(contactId);
 
   if (!result) {
     const error = new Error(`Contact with id=${contactId} not found`);
@@ -41,7 +41,7 @@ const contactByIdGet = async (req, res, next) => {
 
 const contactRemove = async (req, res, next) => {
   const { contactId } = req.params;
-  const necessaryContact = await contactsOperations.removeContact(contactId);
+  const necessaryContact = await Contact.findByIdAndDelete(contactId);
 
   if (!necessaryContact) {
     const error = new Error(
@@ -74,9 +74,35 @@ const contactAdd = async (req, res, next) => {
 
 const contactUpdate = async (req, res, next) => {
   const { contactId } = req.params;
-  const necessaryContact = await contactsOperations.updateContact(
+  const necessaryContact = await Contact.findByIdAndUpdate(
     contactId,
-    req.body
+    req.body,
+    { new: true }
+  );
+
+  if (!necessaryContact) {
+    const error = new Error(
+      `Contact with id=${contactId} not found for update`
+    );
+    error.status = 404;
+    throw error;
+  }
+
+  res.status(200).json({
+    status: "success",
+    code: 200,
+    data: {
+      necessaryContact,
+    },
+  });
+};
+
+const contactUpdateFavorite = async (req, res, next) => {
+  const { contactId } = req.params;
+  const necessaryContact = await Contact.findByIdAndUpdate(
+    contactId,
+    req.body,
+    { new: true }
   );
 
   if (!necessaryContact) {
@@ -97,9 +123,10 @@ const contactUpdate = async (req, res, next) => {
 };
 
 module.exports = {
-  //   getAllContacts,
-  //   contactByIdGet,
-  //   contactRemove,
+  getAllContacts,
+  contactByIdGet,
+  contactRemove,
   contactAdd,
-  //   contactUpdate,
+  contactUpdate,
+  contactUpdateFavorite,
 };
