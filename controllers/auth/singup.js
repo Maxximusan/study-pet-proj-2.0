@@ -15,12 +15,11 @@ const singup = async (req, res) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   const result = await User.create({ name, email, password: hashPassword });
 
-  //Так responce - покажет как в базе будет записано:
+  //Так - responce - покажет как в базе будет записано:
   //   res.status(201).json(result);
 
-  //Так - свой вариант:
+  //Так - свой вариант (что тут писать - зависит от задачи):
   res.status(201).json({
-    // что тут писать - зависит от задачи
     status: "success",
     code: 201,
     message: "User has just been created",

@@ -1,7 +1,8 @@
 const Contact = require("../../models/contacts");
 
 const getAllContacts = async (req, res, next) => {
-  const contacts = await Contact.find({}, "name phone"); // получаем только нужные поля (если нужны все - пусто в find); также есть альтернативные варианты!
+  const { _id } = req.user;
+  const contacts = await Contact.find({ owner: _id }).populate("owner");
 
   res.json({
     status: "success",
@@ -62,7 +63,8 @@ const contactRemove = async (req, res, next) => {
 };
 
 const contactAdd = async (req, res, next) => {
-  const contact = await Contact.create(req.body);
+  const { _id } = req.user;
+  const contact = await Contact.create({ ...req.body, owner: _id });
   res.status(201).json({
     status: "success",
     code: 201,

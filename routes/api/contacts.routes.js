@@ -15,6 +15,7 @@ const {
   validation,
   controllerWrapper,
   isValidId,
+  userVerification,
 } = require("../../middlewares");
 const {
   schemaAdd,
@@ -22,11 +23,16 @@ const {
   updateFavoriteSchema,
 } = require("../../schemas/contactsSchema");
 
-router.get("/", controllerWrapper(getAllContacts));
+router.get("/", userVerification, controllerWrapper(getAllContacts));
 
 router.get("/:contactId", isValidId, controllerWrapper(contactByIdGet));
 
-router.post("/", validation(schemaAdd), controllerWrapper(contactAdd));
+router.post(
+  "/",
+  userVerification,
+  validation(schemaAdd),
+  controllerWrapper(contactAdd)
+);
 
 router.delete("/:contactId", isValidId, controllerWrapper(contactRemove));
 
