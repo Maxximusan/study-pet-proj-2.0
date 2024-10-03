@@ -1,4 +1,4 @@
-const Contact = require("../models/contacts");
+const Contact = require("../../models/contacts");
 
 const getAllContacts = async (req, res, next) => {
   const contacts = await Contact.find({}, "name phone"); // получаем только нужные поля (если нужны все - пусто в find); также есть альтернативные варианты!
