@@ -22,6 +22,7 @@ const userVerification = async (req, res, next) => {
     const { id } = jwt.verify(token, SECRET_KEY); //тут вылетает ошибка - поэтому try\catch
     const user = await User.findById(id);
 
+    //дописуем для логаута - !user.token
     if (!user || !user.token) {
       const error = new Error("Not authorized user");
       error.status = 401;

@@ -15,6 +15,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    //для логаута
     token: {
       type: String,
       default: null,

@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   validation,
   controllerWrapper,
-  isValidId,
+  userVerification,
 } = require("../../middlewares");
 
 const {
@@ -26,5 +26,7 @@ router.post(
   validation(joiLoginSchema),
   controllerWrapper(auth.login)
 );
+
+router.get("/logout", userVerification, controllerWrapper(auth.logout));
 
 module.exports = router;
