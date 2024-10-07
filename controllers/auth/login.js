@@ -33,13 +33,12 @@ const login = async (req, res) => {
   res.json({
     status: "success",
     code: 200,
-    data: {
-      user: {
-        name: user.name,
-        email: user.email,
-      },
-      token,
+
+    user: {
+      name: user.name,
+      email: user.email,
     },
+    token,
   });
 };
 
