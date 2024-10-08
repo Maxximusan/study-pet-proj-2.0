@@ -23,7 +23,7 @@ const signup = async (req, res) => {
   const userCurrent = await User.findOne({ email });
 
   const payload = {
-    id: userr._id,
+    id: userCurrent._id,
   };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
