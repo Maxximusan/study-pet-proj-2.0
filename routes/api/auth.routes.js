@@ -16,9 +16,9 @@ const {
 const auth = require("../../controllers/auth");
 
 router.post(
-  "/singup",
+  "/signup",
   validation(joiSingupSchema),
-  controllerWrapper(auth.singup)
+  controllerWrapper(auth.signup)
 );
 
 router.post(

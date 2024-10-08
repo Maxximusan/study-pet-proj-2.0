@@ -4,6 +4,7 @@ const getAllContacts = async (req, res, next) => {
   const { _id } = req.user;
   const contacts = await Contact.find({ owner: _id }).populate("owner");
 
+  // res.json(contacts);
   res.json({
     status: "success",
     code: 200,
