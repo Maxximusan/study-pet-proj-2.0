@@ -15,9 +15,6 @@ const getAllContacts = async (req, res, next) => {
 };
 
 const contactByIdGet = async (req, res, next) => {
-  // console.log(req.params);
-  // console.log(req.params.contactId);
-
   const { contactId } = req.params;
   const result = await Contact.findById(contactId);
 
@@ -66,6 +63,7 @@ const contactRemove = async (req, res, next) => {
 const contactAdd = async (req, res, next) => {
   const { _id } = req.user;
   const contact = await Contact.create({ ...req.body, owner: _id });
+
   res.status(201).json({
     status: "success",
     code: 201,
